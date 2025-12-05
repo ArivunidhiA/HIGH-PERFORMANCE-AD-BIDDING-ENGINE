@@ -1,0 +1,144 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - api-gateway
+      - cpp-engine
+    networks:
+      - bidding-network
+    restart: unless-stopped
+
+  cpp-engine:
+    build:
+      context: ./bidding_engine
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+      - "9090:9090"
+    environment:
+      - THREAD_POOL_SIZE=8
+      - CACHE_SIZE_MB=512
+      - LOG_LEVEL=info
+    volumes:
+      - ./bidding_engine/config:/app/config:ro
+    networks:
+      - bidding-network
+    deploy:
+      replicas: 3
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9090/metrics"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-bidding_user}:${POSTGRES_PASSWORD:-bidding_pass}@postgres:5432/${POSTGRES_DB:-bidding_db}
+      - REDIS_URL=redis://redis:6379
+      - CPP_ENGINE_HOST=cpp-engine
+      - CPP_ENGINE_PORT=5000
+      - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-in-production}
+      - JWT_EXPIRES_IN=7d
+      - API_PORT=3000
+    depends_on:
+      - postgres
+      - redis
+      - cpp-engine
+    networks:
+      - bidding-network
+    deploy:
+      replicas: 2
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/v1/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  postgres:
+    image: postgres:15-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-bidding_user}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-bidding_pass}
+      - POSTGRES_DB=${POSTGRES_DB:-bidding_db}
+    networks:
+      - bidding-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-bidding_user}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - bidding-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    ports:
+      - "9091:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    networks:
+      - bidding-network
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    networks:
+      - bidding-network
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+
+networks:
+  bidding-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+  prometheus_data:
+  grafana_data:
+

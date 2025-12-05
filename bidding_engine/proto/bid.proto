@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package bidding;
+
+message BidRequest {
+  string id = 1;
+  int64 timestamp = 2;
+  string user_id = 3;
+  string ad_slot_id = 4;
+  double floor_price = 5;
+  map<string, string> targeting = 6;
+  string campaign_id = 7;
+}
+
+message BidResponse {
+  string id = 1;
+  double winning_bid = 2;
+  double price = 3;
+  int32 latency_ms = 4;
+  string status = 5;
+  string campaign_id = 6;
+  bool won = 7;
+}
+
+message Metrics {
+  int64 requests_per_sec = 1;
+  double p50_latency_ms = 2;
+  double p95_latency_ms = 3;
+  double p99_latency_ms = 4;
+  double success_rate = 5;
+  double cache_hit_rate = 6;
+}
+
