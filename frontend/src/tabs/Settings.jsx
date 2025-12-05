@@ -45,7 +45,7 @@ export default function Settings() {
             />
           </div>
           <button 
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg font-black hover:bg-blue-700 transition-colors shadow-lg"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-100 border-2 border-blue-500 text-gray-900 rounded-lg font-black hover:bg-blue-200 transition-colors shadow-lg"
             style={{ boxShadow: '0 0 20px rgba(59, 130, 246, 0.4)' }}
           >
             <Save className="w-4 h-4" />

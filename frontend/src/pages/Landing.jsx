@@ -81,7 +81,7 @@ export default function Landing() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => navigate('/dashboard')}
-            className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-lg font-semibold shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all flex items-center gap-2"
+            className="px-6 py-2.5 bg-blue-100 border-2 border-blue-500 text-gray-900 rounded-lg font-semibold shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all flex items-center gap-2"
           >
             View Dashboard
             <ArrowRight className="w-4 h-4" />
@@ -130,7 +130,7 @@ export default function Landing() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => navigate('/dashboard')}
-                  className="px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-xl font-semibold text-lg shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 transition-all flex items-center justify-center gap-2"
+                  className="px-8 py-4 bg-blue-100 border-2 border-blue-500 text-gray-900 rounded-xl font-semibold text-lg shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 transition-all flex items-center justify-center gap-2"
                 >
                   <Play className="w-5 h-5" />
                   See It in Action
@@ -456,15 +456,15 @@ export default function Landing() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 py-12 px-6">
+      <footer className="bg-gray-100 border-t border-gray-200 py-12 px-6">
         <div className="max-w-7xl mx-auto text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
             <div className="p-2 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-lg">
               <Zap className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-bold text-white">BidEngine</span>
+            <span className="text-xl font-bold text-gray-900">BidEngine</span>
           </div>
-          <p className="text-sm">High-Performance Ad Bidding Engine • Production-Ready SaaS Platform</p>
+          <p className="text-sm text-gray-700">High-Performance Ad Bidding Engine • Production-Ready SaaS Platform</p>
         </div>
       </footer>
     </div>

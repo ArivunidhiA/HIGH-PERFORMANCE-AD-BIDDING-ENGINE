@@ -217,20 +217,20 @@ export default function LiveBidding() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={startSimulation}
-              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl font-black shadow-lg border-2 border-green-400"
+              className="flex items-center gap-2 px-6 py-3 bg-green-100 border-2 border-green-500 text-gray-900 rounded-xl font-black shadow-lg"
               style={{ boxShadow: '0 0 25px rgba(16, 185, 129, 0.5), 0 0 50px rgba(16, 185, 129, 0.3)' }}
             >
-              <span className="text-white font-black">Start Simulation</span>
+              <span className="text-gray-900 font-black">Start Simulation</span>
             </motion.button>
           ) : (
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={stopSimulation}
-              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl font-black shadow-lg border-2 border-red-400"
+              className="flex items-center gap-2 px-6 py-3 bg-red-100 border-2 border-red-500 text-gray-900 rounded-xl font-black shadow-lg"
               style={{ boxShadow: '0 0 25px rgba(239, 68, 68, 0.5), 0 0 50px rgba(239, 68, 68, 0.3)' }}
             >
-              <span className="text-white font-black">Stop</span>
+              <span className="text-gray-900 font-black">Stop</span>
             </motion.button>
           )}
         </div>
