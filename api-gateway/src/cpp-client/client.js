@@ -139,7 +139,13 @@ class CppClient extends EventEmitter {
 let cppClient = null;
 
 export async function initCppClient() {
-  const host = process.env.CPP_ENGINE_HOST || 'cpp-engine';
+  // Skip initialization in development mode or if host is not set
+  if (process.env.NODE_ENV === 'development' || !process.env.CPP_ENGINE_HOST || process.env.CPP_ENGINE_HOST === 'cpp-engine') {
+    console.log('C++ client initialization skipped (development mode)');
+    return null;
+  }
+  
+  const host = process.env.CPP_ENGINE_HOST;
   const port = parseInt(process.env.CPP_ENGINE_PORT || '5000');
   
   cppClient = new CppClient(host, port);

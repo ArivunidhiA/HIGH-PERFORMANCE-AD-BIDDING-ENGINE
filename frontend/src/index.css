@@ -9,13 +9,13 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #0a0a0f;
-  color: #e5e7eb;
+  background: #f9fafb;
+  color: #111827;
   overflow-x: hidden;
 }
 
@@ -29,20 +29,37 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #1a1a2e;
+  background: #f3f4f6;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #25253a;
+  background: linear-gradient(180deg, #3b82f6, #06b6d4);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2d2d42;
+  background: linear-gradient(180deg, #2563eb, #0891b2);
 }
 
 @layer components {
   .glass-card {
-    @apply bg-surface/50 backdrop-blur-md border border-surface-light rounded-xl;
+    @apply bg-white border-2 border-gray-200 rounded-2xl shadow-lg;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #3b82f6, #06b6d4);
+    border-radius: 3px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #2563eb, #0891b2);
   }
 }

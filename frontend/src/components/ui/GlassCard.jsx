@@ -1,24 +1,15 @@
 import { motion } from 'framer-motion';
 
-export default function GlassCard({ children, className = '', padding = 'md' }) {
-  const paddingClasses = {
-    sm: 'p-4',
-    md: 'p-6',
-    lg: 'p-8',
-  };
-
+export default function GlassCard({ children, className = '', ...props }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ scale: 1.02 }}
-      className={`
-        bg-surface/50 backdrop-blur-md border border-surface-light rounded-xl
-        ${paddingClasses[padding]} ${className}
-      `}
+      className={`bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg ${className}`}
+      style={{ boxShadow: '0 0 25px rgba(59, 130, 246, 0.2), 0 0 50px rgba(59, 130, 246, 0.1)' }}
+      {...props}
     >
       {children}
     </motion.div>
   );
 }
-

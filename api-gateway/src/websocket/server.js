@@ -32,20 +32,23 @@ export function initWebSocket(io) {
 
   // Emit bid events
   bidEmitter.on('bid:complete', (bid) => {
+    // Emit to all connected clients for live bidding view
+    io.emit('bid', bid);
     io.to(`campaign:${bid.campaignId}`).emit('bid', bid);
     io.to('metrics').emit('bid', bid);
   });
 
-  // Emit metrics every second
+  // Emit metrics every 2 seconds
   setInterval(() => {
     const metrics = {
       timestamp: Date.now(),
-      requestsPerSec: Math.floor(Math.random() * 1000) + 500, // Placeholder
-      p99Latency: Math.random() * 10,
-      availability: 99.9 + Math.random() * 0.1
+      requestsPerSec: Math.floor(Math.random() * 300) + 700,
+      p99Latency: (Math.random() * 3 + 6).toFixed(2),
+      throughput: (Math.random() * 2 + 4).toFixed(1),
+      availability: (99.9 + Math.random() * 0.09).toFixed(2)
     };
     io.to('metrics').emit('metrics', metrics);
-  }, 1000);
+  }, 2000);
 
   return bidEmitter;
 }

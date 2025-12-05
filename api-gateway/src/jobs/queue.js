@@ -1,11 +1,27 @@
-import { Queue } from 'bull';
 import { getRedis } from '../cache/redis.js';
 import db from '../database/connection.js';
+
+// Use dynamic import for Bull to handle ESM/CJS compatibility
+let Queue = null;
 
 let metricsQueue = null;
 let cleanupQueue = null;
 
 export async function initJobs() {
+  // Skip background jobs in development mode
+  if (process.env.NODE_ENV === 'development') {
+    console.log('Background jobs skipped (development mode)');
+    return;
+  }
+  
+  try {
+    const bullModule = await import('bull');
+    Queue = bullModule.default || bullModule.Queue || bullModule;
+  } catch (error) {
+    console.warn('Bull queue not available, skipping background jobs:', error.message);
+    return;
+  }
+  
   const redis = getRedis();
   
   // Metrics aggregation job

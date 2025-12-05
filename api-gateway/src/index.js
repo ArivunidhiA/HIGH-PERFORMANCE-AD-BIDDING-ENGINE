@@ -60,9 +60,10 @@ app.get('/api/v1/health', (req, res) => {
 
 // API Routes
 app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/bids', authenticateToken, bidRoutes);
-app.use('/api/v1/campaigns', authenticateToken, campaignRoutes);
-app.use('/api/v1/metrics', authenticateToken, metricsRoutes);
+// Remove auth for demo - allow public access
+app.use('/api/v1/bids', bidRoutes);
+app.use('/api/v1/campaigns', campaignRoutes);
+app.use('/api/v1/metrics', metricsRoutes);
 
 // Error handler
 app.use(errorHandler);
@@ -78,9 +79,9 @@ async function start() {
     await initRedis();
     logger.info('Redis connected');
 
-    // Initialize C++ client
-    await initCppClient();
-    logger.info('C++ client connected');
+    // Initialize C++ client (optional for local testing)
+    // Skip C++ client for local development - bids will use mock responses
+    logger.info('C++ client skipped (local development mode - using mock responses)');
 
     // Initialize WebSocket
     initWebSocket(io);

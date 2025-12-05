@@ -7,28 +7,37 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#0a0a0f',
+        // Light mode colors for landing page
+        background: '#ffffff',
         surface: {
-          DEFAULT: '#1a1a2e',
-          light: '#25253a',
+          DEFAULT: '#f9fafb',
+          light: '#ffffff',
+        },
+        // Dark mode colors for dashboard
+        dark: {
+          background: '#0a0a0f',
+          surface: {
+            DEFAULT: '#1a1a2e',
+            light: '#25253a',
+          },
         },
         primary: {
-          DEFAULT: '#00f0ff',
-          dark: '#00b8c4',
-          light: '#5ff4ff',
+          DEFAULT: '#2563eb', // Blue-600
+          dark: '#1e40af', // Blue-800
+          light: '#3b82f6', // Blue-500
         },
         secondary: {
-          DEFAULT: '#a78bfa',
-          dark: '#8b5cf6',
-          light: '#c4b5fd',
+          DEFAULT: '#06b6d4', // Cyan-500
+          dark: '#0891b2', // Cyan-600
+          light: '#22d3ee', // Cyan-400
         },
         success: '#10b981',
         warning: '#f59e0b',
         error: '#ef4444',
         text: {
-          primary: '#e5e7eb',
-          secondary: '#9ca3af',
-          tertiary: '#6b7280',
+          primary: '#111827', // Gray-900 for light mode
+          secondary: '#6b7280', // Gray-500
+          tertiary: '#9ca3af', // Gray-400
         }
       },
       animation: {
@@ -63,4 +72,3 @@ export default {
   },
   plugins: [],
 }
-

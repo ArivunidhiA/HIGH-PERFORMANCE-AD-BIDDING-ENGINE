@@ -2,12 +2,14 @@
   command = "cd frontend && npm install && npm run build"
   publish = "frontend/dist"
 
+# API proxy - update this with your actual API gateway URL
 [[redirects]]
   from = "/api/*"
   to = "https://your-api-gateway.com/api/:splat"
   status = 200
   force = true
 
+# SPA routing - all routes go to index.html
 [[redirects]]
   from = "/*"
   to = "/index.html"
@@ -15,4 +17,9 @@
 
 [build.environment]
   NODE_VERSION = "18"
+
+# Environment variables for Netlify
+# Set these in Netlify dashboard: Site settings > Build & deploy > Environment variables
+# VITE_API_URL = /api/v1 (or your API URL)
+# VITE_WS_URL = wss://your-api-gateway.com (or your WebSocket URL)
 
