@@ -438,7 +438,7 @@ export default function Landing() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => navigate('/dashboard')}
-                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-xl font-semibold text-lg shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 transition-all flex items-center justify-center gap-2"
+                className="px-8 py-4 bg-blue-100 border-2 border-blue-500 text-gray-900 rounded-xl font-semibold text-lg shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 transition-all flex items-center justify-center gap-2"
               >
                 <Play className="w-5 h-5" />
                 View Live Dashboard
